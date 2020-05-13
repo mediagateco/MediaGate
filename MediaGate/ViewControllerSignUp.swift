@@ -108,59 +108,35 @@ class ViewControllerSignUp: UIViewController, UITextFieldDelegate {
     @IBAction func signUpButton(_ sender: Any) {
         self.view.isUserInteractionEnabled = false
         if(self.studentPasswordField.text == self.confirmPasswordField.text) {
-            Auth.auth().createUser(withEmail: studentEmail!.lowercased(), password: studentPasswordField.text!) {
-                (authdata,error) in
-                if error != nil {
-                    self.view.isUserInteractionEnabled = true
-                    self.makeAlert(titleInput: "Error in Database!", messageInput: error!.localizedDescription)
-                } else {
-                        //Add Database Action
-                        //Retrieve the FCM token
-                        let firestoreDatabase = Firestore.firestore()
-                        let deviceID = UIDevice.current.identifierForVendor!.uuidString
-                        firestoreDatabase.collection("Fcm").document(deviceID).getDocument
-                        { (snapshot, err) in
-                            if let data = snapshot?.data() {
-                                let fcmToken = data["fcmToken"]
-                                //set FCM token
-                                let fcmStore = ["fcmToken" : fcmToken!] as [String : Any]
-                                //Add Database Action
-                                //let firestoreDatabase = Firestore.firestore()
-                                var firestoreReference : DocumentReference? = nil
-                                let firestorePost = ["Name" : self.studentName!,"Email" : self.studentEmail!.lowercased(), "PhoneNumber" : self.studentPhone!, "Nationality" : self.studentNationality!,"Specialization" : self.studentSpecialization!,"Gender" : self.studentGender!,"isVerified" : true, "isCompany" : false , "isTrainer" : false , "Description" : "", "Registration Number" : "", "Address" : "", "Activity" : "", "fcmToken" : fcmToken] as [String : Any]
-                                firestoreReference = firestoreDatabase.collection("Users").addDocument(data: firestorePost, completion: { (error) in
-                                    if error != nil {
-                                        self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error")
-                                        //delete the created User in Authentication
-                                        //let userID = Auth.auth().currentUser!.uid
-                                        let user = Auth.auth().currentUser
-                                        //user?.delete { error in
-                                          //if let error = error {
-                                            // An error happened.
-                                          //} else {
-                                            // Account deleted.
-                                          //}
-                                        //}
-                                    } else {
-                                        //CONFIRMATION
-                                        self.view.isUserInteractionEnabled = true
-                                        print("User Created Successfully")
-                                        let alert = UIAlertController(title: "مبروك!", message: "مبروك لانضمامك معنا لعائلة ميدياغيت!",preferredStyle: .alert)
-                                        alert.addAction(UIAlertAction(title:"متابعة", style: .default, handler:  { action in self.performSegue(withIdentifier: "SendToFeed", sender: nil)
-                                        } ))
-                                        self.present(alert,animated: true, completion: nil)
-                                        //SEND VERIFICATION EMAIL
-                                        //self.sendEmailVerification()
-                                        }})
-                            } else {
-                                self.view.isUserInteractionEnabled = true
-                                print("FCM token not registered for the device")
-                        }
-                            
-                    }}}}else {
-                            self.view.isUserInteractionEnabled = true
-                            self.makeAlert(titleInput: "خطأ!", messageInput: "هنالك خطأ في انشاء كلمة المرور. الرجاء التأكد من أن كلمة المرور في الحقلين هي ذاتها.")
-                        }
+            let firestoreDatabase = Firestore.firestore()
+            let fcmToken = Messaging.messaging().fcmToken
+                Auth.auth().createUser(withEmail: self.studentEmail!.lowercased(), password: self.studentPasswordField.text!)
+                { (authdata,error) in
+                    if error != nil {
+                        self.view.isUserInteractionEnabled = true
+                        self.makeAlert(titleInput: "Error in Database!", messageInput: error!.localizedDescription)
+                        } else {
+                            //Add users to the database
+                            var firestoreReference : DocumentReference? = nil
+                            let firestorePost = ["Name" : self.studentName!,"Email" : self.studentEmail!.lowercased(), "PhoneNumber" : self.studentPhone!, "Nationality" : self.studentNationality!,"Specialization" : self.studentSpecialization!,"Gender" : self.studentGender!,"isVerified" : true, "isCompany" : false , "isTrainer" : false , "Description" : "", "Registration Number" : "", "Address" : "", "Activity" : "", "fcmToken" : fcmToken] as [String : Any]
+                            firestoreReference = firestoreDatabase.collection("Users").addDocument(data: firestorePost, completion: { (error) in
+                                if error != nil {
+                                    self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error")
+                                    let user = Auth.auth().currentUser
+                                } else {
+                                    //CONFIRMATION
+                                    self.view.isUserInteractionEnabled = true
+                                    print("User Created Successfully")
+                                    let alert = UIAlertController(title: "مبروك!", message: "مبروك لانضمامك معنا لعائلة ميدياغيت!",preferredStyle: .alert)
+                                    alert.addAction(UIAlertAction(title:"متابعة", style: .default, handler:  { action in self.performSegue(withIdentifier: "SendToFeed", sender: nil)
+                                    } ))
+                                    self.present(alert,animated: true, completion: nil)}})}}
+        } else {
+            self.view.isUserInteractionEnabled = true
+                self.makeAlert(titleInput: "خطأ!", messageInput: "هنالك خطأ في انشاء كلمة المرور. الرجاء التأكد من أن كلمة المرور في الحقلين هي ذاتها.")
+            
+        }
+        
     }
     
     func sendEmailVerification(_ callback: ((Error?) -> ())? = nil){

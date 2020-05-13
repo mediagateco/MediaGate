@@ -310,30 +310,16 @@ class ViewControllerGeneralSignUp: UIViewController,UITextFieldDelegate {
                     } else {
                         //Retrieve the FCM token
                         let firestoreDatabase = Firestore.firestore()
-                        let deviceID = UIDevice.current.identifierForVendor!.uuidString
-                        firestoreDatabase.collection("Fcm").document(deviceID).getDocument
-                        { (snapshot, err) in
-                            if let data = snapshot?.data() {
-                                let fcmToken = data["fcmToken"]
-                                //set FCM token
-                                let fcmStore = ["fcmToken" : fcmToken!] as [String : Any]
-                                //Add Database Action
-                                var firestoreReference : DocumentReference? = nil
-                                let firestorePost = ["Name" : self.lablName.text!,"Email" : self.lablEmail.text!.trimmingCharacters(in: .whitespaces).lowercased(), "PhoneNumber" : self.lablPhoneNumber.text!, "Nationality" : self.btnCountry.titleLabel?.text!,"Specialization" : self.btnSpecilization.titleLabel?.text!,"Gender" : self.btnGender.titleLabel?.text!,"isVerified" : false, "isCompany" : false , "isTrainer" : false , "Description" : "", "Registration Number" : "", "Address" : "", "Activity" : "", "fcmToken" : fcmToken] as [String : Any]
-                                firestoreReference = firestoreDatabase.collection("Users").addDocument(data: firestorePost, completion: { (error) in
-                                    if error != nil {
+                        //set FCM token
+                        let fcmToken = Messaging.messaging().fcmToken
+                        let fcmStore = ["fcmToken" : fcmToken!] as [String : Any]
+                        //Add Database Action
+                        var firestoreReference : DocumentReference? = nil
+                        let firestorePost = ["Name" : self.lablName.text!,"Email" : self.lablEmail.text!.trimmingCharacters(in: .whitespaces).lowercased(), "PhoneNumber" : self.lablPhoneNumber.text!, "Nationality" : self.btnCountry.titleLabel?.text!,"Specialization" : self.btnSpecilization.titleLabel?.text!,"Gender" : self.btnGender.titleLabel?.text!,"isVerified" : false, "isCompany" : false , "isTrainer" : false , "Description" : "", "Registration Number" : "", "Address" : "", "Activity" : "", "fcmToken" : fcmToken] as [String : Any]
+                        firestoreReference = firestoreDatabase.collection("Users").addDocument(data: firestorePost, completion: { (error) in
+                                if error != nil {
                                         self.view.isUserInteractionEnabled = true
                                         self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error")
-                                        //delete the created User in Authentication
-                                        //let userID = Auth.auth().currentUser!.uid
-                                        //                    let user = Auth.auth().currentUser
-                                        //                    user?.delete { error in
-                                        //                        if let error = error {
-                                        //                            // An error happened.
-                                        //                        } else {
-                                        //                            // Account deleted.
-                                        //                            }
-                                        //                        }
                                     } else {
                                         //CONFIRMATION
                                         print("User Created Successfully")
@@ -344,13 +330,8 @@ class ViewControllerGeneralSignUp: UIViewController,UITextFieldDelegate {
                                         self.present(alert,animated: true, completion: nil)
                                     }
                                 })
-                            } else {
-                                    self.view.isUserInteractionEnabled = true
-                                    print("FCM token not registered for the device")
-                                    self.makeAlert(titleInput: "Error in FCM Token", messageInput: "FCM Token not registered.")
-                            }
-                            
-                        }}}}
+                        
+                }}}
             else {
                 self.view.isUserInteractionEnabled = true
                 self.makeAlert(titleInput: "خطأ!", messageInput: "هنالك خطأ في انشاء كلمة المرور. الرجاء التأكد من أن كلمة المرور في الحقلين هي ذاتها.")
@@ -369,30 +350,17 @@ class ViewControllerGeneralSignUp: UIViewController,UITextFieldDelegate {
                     //Add to Database
                     //Retrieve the FCM token
                     let firestoreDatabase = Firestore.firestore()
-                    let deviceID = UIDevice.current.identifierForVendor!.uuidString
-                    firestoreDatabase.collection("Fcm").document(deviceID).getDocument
-                    { (snapshot, err) in
-                        if let data = snapshot?.data() {
-                            let fcmToken = data["fcmToken"]
-                            //set FCM token
-                            let fcmStore = ["fcmToken" : fcmToken!] as [String : Any]
-                            //Add Database Action
-                            var firestoreReference : DocumentReference? = nil
-                            let firestorePost = ["Name" : self.corpName.text!,"Email" : self.corpEmail.text!.trimmingCharacters(in: .whitespaces).lowercased(), "PhoneNumber" : self.corpPhone.text!, "Nationality" : self.btnCountry.titleLabel?.text!,"Specialization" : "","Gender" : "","isVerified" : false, "isCompany" : true , "isTrainer" : false , "Description" : "", "Registration Number" : self.corpReg.text!, "Address" : self.corpAddress.text!, "Activity" : self.corpActivity.text!, "fcmToken" : fcmToken] as [String : Any]
-                            firestoreReference = firestoreDatabase.collection("Users").addDocument(data: firestorePost, completion: { (error) in
-                                if error != nil {
+                    let fcmToken = Messaging.messaging().fcmToken
+                    //set FCM token
+                    let fcmStore = ["fcmToken" : fcmToken!] as [String : Any]
+                    //Add Database Action
+                    var firestoreReference : DocumentReference? = nil
+                    let firestorePost = ["Name" : self.corpName.text!,"Email" : self.corpEmail.text!.trimmingCharacters(in: .whitespaces).lowercased(), "PhoneNumber" : self.corpPhone.text!, "Nationality" : self.btnCountry.titleLabel?.text!,"Specialization" : "","Gender" : "","isVerified" : false, "isCompany" : true , "isTrainer" : false , "Description" : "", "Registration Number" : self.corpReg.text!, "Address" : self.corpAddress.text!, "Activity" : self.corpActivity.text!, "fcmToken" : fcmToken] as [String : Any]
+                    firestoreReference = firestoreDatabase.collection("Users").addDocument(data: firestorePost, completion:
+                    { (error) in
+                        if error != nil {
                                     self.view.isUserInteractionEnabled = true
                                     self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error")
-                                    //delete the created User in Authentication
-                                    //let userID = Auth.auth().currentUser!.uid
-                                    //let user = Auth.auth().currentUser
-                                    //user?.delete { error in
-                                        //if let error = error {
-                                            // An error happened.
-                                            //} else {
-                                            // Account deleted.
-                                            //}
-                                    //}
                                 } else {
                                     //CONFIRMATION
                                     self.view.isUserInteractionEnabled = true
@@ -403,16 +371,14 @@ class ViewControllerGeneralSignUp: UIViewController,UITextFieldDelegate {
                                     self.present(alert,animated: true, completion: nil)
                                 }
                             })
-                        } else {
-                                self.view.isUserInteractionEnabled = true
-                                print("FCM token not registered for the device", err!.localizedDescription)
-                                self.makeAlert(titleInput: "Error in FCM Token", messageInput: err!.localizedDescription)
-                        }
-                    }}}}
+                    
+                }}}
             else {
                 self.view.isUserInteractionEnabled = true
                 self.makeAlert(titleInput: "خطأ!", messageInput: "هنالك خطأ في انشاء كلمة المرور. الرجاء التأكد من أن كلمة المرور في الحقلين هي ذاتها.")
-    }}
+        }
+        
+    }
     
     func makeAlert(titleInput: String, messageInput: String) {
         let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle:

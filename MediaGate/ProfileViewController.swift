@@ -52,16 +52,21 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     var selectedurl = ""
 
     @IBAction func Logout(_ sender: Any) {
-        
-        do {
-            try Auth.auth().signOut()
-            self.performSegue(withIdentifier: "ToViewController", sender: nil)
-        } catch {
-            print("error in logout.")
-        }
-        
-        
+            
+        let alert = UIAlertController(title: "تسجيل خروج", message: "هل أنت متأكد من أنك تريد تسجيل خروج؟", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "خروج", style: UIAlertAction.Style.default, handler: {(action:UIAlertAction!) in
+                do {
+                    try Auth.auth().signOut()
+                    self.performSegue(withIdentifier: "ToViewController", sender: nil)
+                }catch{
+                        print("error in logout.")
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "إلغاء", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

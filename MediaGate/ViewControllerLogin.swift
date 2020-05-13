@@ -34,25 +34,30 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
                             for document in snapshot!.documents {
                                 //Get the user id
                                 let userId = document.documentID
+                                
+                                //*****RESOLVE THE LOGIN ISSUE******
+                                //UserDefaults.standard.set(true, forKey: "ISUSERLOGGEDIN")
                                 //Retrieve the FCM token
-                                let deviceID = UIDevice.current.identifierForVendor!.uuidString
-                                db.collection("Fcm").document(deviceID).getDocument { (snapshot, err) in
-                                    if let data = snapshot?.data() {
-                                        let fcmToken = data["fcmToken"]
+                                //let deviceID = UIDevice.current.identifierForVendor!.uuidString
+                                //db.collection("Fcm").document(deviceID).getDocument { (snapshot, err) in
+                                    //if let data = snapshot?.data() {
+                                        //let fcmToken = data["fcmToken"]
                                         //set FCM token
+                                        let fcmToken = Messaging.messaging().fcmToken
                                         let fcmStore = ["fcmToken" : fcmToken!] as [String : Any]
                                         db.collection("Users").document(userId)
                                         .setData(fcmStore,merge: true)
-                                    } else {
-                                        print("FCM token not registered for the device")
-                                    }
+                                    //} else {
+                                        //print("FCM token not registered for the device")
+                                    //}
+                                
                                 }
                             }
                         }
                     }
                     self.performSegue(withIdentifier: "ToFeedViewController", sender: nil)
                 }
-            }
+            //}
         } else {
             let alert = UIAlertController(title: "Error in form", message: "Please enter an email or a password", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))

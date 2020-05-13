@@ -122,7 +122,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         registration.layer.cornerRadius = registration.frame.height / 2
         login.layer.cornerRadius = login.frame.height / 2
-
+        
         
     }
     

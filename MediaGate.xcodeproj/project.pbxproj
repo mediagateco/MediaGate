@@ -11,6 +11,8 @@
 		1E4833DD23FAA11B004E116F /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4833DC23FAA11B004E116F /* UploadViewController.swift */; };
 		1E4833DF23FAA15E004E116F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4833DE23FAA15E004E116F /* ProfileViewController.swift */; };
 		1E4833E123FAA1F0004E116F /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4833E023FAA1F0004E116F /* FeedCell.swift */; };
+		1E525885246819AC0097E9AD /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E525884246819AC0097E9AD /* AppManager.swift */; };
+		1E52588724689C580097E9AD /* ViewControllerLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E52588624689C580097E9AD /* ViewControllerLaunch.swift */; };
 		1E6C9BA5240D258E0046EA28 /* ViewControllerGeneralSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C9BA4240D258E0046EA28 /* ViewControllerGeneralSignUp.swift */; };
 		1E6C9BAF2418D75E0046EA28 /* uploadicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E6C9BAE2418D75E0046EA28 /* uploadicon.png */; };
 		1E81A63F23F4225600904344 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E81A63E23F4225600904344 /* Main.storyboard */; };
@@ -49,6 +51,8 @@
 		1E4833DC23FAA11B004E116F /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		1E4833DE23FAA15E004E116F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		1E4833E023FAA1F0004E116F /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		1E525884246819AC0097E9AD /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
+		1E52588624689C580097E9AD /* ViewControllerLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLaunch.swift; sourceTree = "<group>"; };
 		1E6C9BA4240D258E0046EA28 /* ViewControllerGeneralSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerGeneralSignUp.swift; sourceTree = "<group>"; };
 		1E6C9BAE2418D75E0046EA28 /* uploadicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uploadicon.png; sourceTree = "<group>"; };
 		1E6C9BB0241A54730046EA28 /* MediaGate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MediaGate.entitlements; sourceTree = "<group>"; };
@@ -122,6 +126,8 @@
 				1E6C9BB0241A54730046EA28 /* MediaGate.entitlements */,
 				1EA3A4CF23F28D3600C4A3C2 /* AppDelegate.swift */,
 				1EA3A4D123F28D3600C4A3C2 /* SceneDelegate.swift */,
+				1E525884246819AC0097E9AD /* AppManager.swift */,
+				1E52588624689C580097E9AD /* ViewControllerLaunch.swift */,
 				1EA3A4D323F28D3600C4A3C2 /* ViewController.swift */,
 				1E8B1E1C23F925F500470378 /* ViewControllerLogin.swift */,
 				1E8B1E1A23F5646100470378 /* ViewControllerSignUp.swift */,
@@ -310,6 +316,7 @@
 				1E8B1E2323FA742400470378 /* ProfilePhotoViewCell.swift in Sources */,
 				1E8B1E2723FA761000470378 /* userFeedCell.swift in Sources */,
 				1EA2BE292426A7F30055FA63 /* ProfileRollerViewController.swift in Sources */,
+				1E52588724689C580097E9AD /* ViewControllerLaunch.swift in Sources */,
 				1E4833DF23FAA15E004E116F /* ProfileViewController.swift in Sources */,
 				1EA3A4D423F28D3600C4A3C2 /* ViewController.swift in Sources */,
 				1E6C9BA5240D258E0046EA28 /* ViewControllerGeneralSignUp.swift in Sources */,
@@ -317,6 +324,7 @@
 				1E8B1E1B23F5646100470378 /* ViewControllerSignUp.swift in Sources */,
 				1EA2BE2D2426CA060055FA63 /* ProfileRollerCollectionViewCell.swift in Sources */,
 				1EA3A4D223F28D3600C4A3C2 /* SceneDelegate.swift in Sources */,
+				1E525885246819AC0097E9AD /* AppManager.swift in Sources */,
 				1EA2BE2B2426A8CE0055FA63 /* ProfileRollerTableViewCell.swift in Sources */,
 				1E8B1E2523FA759900470378 /* UserDetailsViewController.swift in Sources */,
 			);
@@ -465,7 +473,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.MediaGate.MediaGate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -488,7 +496,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.MediaGate.MediaGate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -12,9 +12,12 @@ import UserNotificationsUI
 import Foundation
 import AVFoundation
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate{
 
+    //In order to stay signed in we need those 2 variables linked to function in firebase
+    
 
     var window: UIWindow?
     var restrictRotation:UIInterfaceOrientationMask = .portrait
@@ -53,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().requestAuthorization(options: options) {(authorized, error) in
             if authorized {
                 print("SUCCESSFULLY REGISTERED!")
+                //application.registerForRemoteNotifications()
             }
         }
         
@@ -69,12 +73,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         print("REGISTERED WITH FCM TOKEN: ", fcmToken)
         UserDefaults.standard.setValue("fcmToken", forKey: fcmToken)
-        if let userUid = Auth.auth().currentUser?.uid {
-            print("User ID is: ", userUid)
-            let deviceUid = UIDevice.current.identifierForVendor!.uuidString
-            let fcmStore = ["fcmToken" : fcmToken] as [String : Any]
-            Firestore.firestore().collection("Fcm").document(deviceUid).setData(fcmStore, merge: true)
-        }
+//        if let userUid = Auth.auth().currentUser?.uid {
+//            print("User ID is: ", userUid)
+//            let deviceUid = UIDevice.current.identifierForVendor!.uuidString
+//            let fcmStore = ["fcmToken" : fcmToken] as [String : Any]
+//            Firestore.firestore().collection("Fcm").document(deviceUid).setData(fcmStore, merge: true)
+//        }
     }
     
     //From the class
